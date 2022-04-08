@@ -1,14 +1,25 @@
+import { CreateThread } from "./helper";
+
 require('dotenv').config()
+const {Client, MessageEmbed} = require('discord.js');
+const bot = new Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
-// const {Client, MessageEmbed} = require('discord.js');
+CreateThread(function(){
+  if (process.env['CHALLONGE_API'] === undefined || process.env['CHALLONGE_API'] === '') {
+    throw 'challonge_api is not defined in the .env. copy example.env and rename to .env'
+  }
+  if (process.env['DISCORD_KEY'] === undefined || process.env['DISCORD_KEY'] === '') {
+    throw 'DISCORD_KEY is not defined in the .env. copy example.env and rename to .env'
+  }
+  CreateThread(function() {
+    bot.login(process.env['DISCORD_KEY'])
+  })
+})
 
-// const client = new Client();
-// var data = {}
+bot.on('ready', () => {
+  console.log('competition bot is ready!')
 
-// client.on('ready', () => {
-//   console.log('Apex Bot is ready!')
-
-// })
+})
 
 // function GrabJSONFromURL() : String {
 //     return ""
@@ -23,5 +34,3 @@ require('dotenv').config()
 //     return null
 //   }
 // }
-
-console.log(process.env['S3_BUCKET']) // remove this after you've confirmed it working
